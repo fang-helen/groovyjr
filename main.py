@@ -25,15 +25,17 @@ async def on_message(message):
     elif message.content.startswith('-join'):
         if message.author.voice and message.author.voice.channel:
             channel = message.author.voice.channel
+            await message.channel.send('Groovy Jr. in ' + channel.name)
             await message.guild.change_voice_state(channel=channel, self_mute=False, self_deaf=True)
-            await message.channel.send('Groovy Jr. in' + client.user.id)
         else:
             await message.channel.send("You are not connected to a voice channel")
             return
-    elif message.content.startswith('-leave'):
-        print('leaving')
-        await message.guild.change_voice_state(channel=None)
-
+    if  message.content.startswith('-leave'):
+        if message.author.voice and message.author.voice.channel:
+            print('leaving')
+            await message.guild.change_voice_state(channel=None)
+        else:
+            await message.channel.send("You are not connected to a voice channel")
 
 # ----------------------------
 
